@@ -30,7 +30,7 @@ func main() {
 	}
 	queueExchange := &rabbitmq.QueueExchange{
 		"x",
-		"info",
+		"",  //info 存在走route模式，为空走publish/sub
 		"ex",
 		"direct",
 	}
@@ -38,6 +38,7 @@ func main() {
 	mq.RegisterProducer(t1)
 	mq2 := rabbitmq.New(queueExchange)
 	mq2.RegisterReceiver(t2)
+	//重启消息不丢失
 	mq2.StartConsumer()
 	mq.StartProducer()
 	//mq2.StartConsumer()
